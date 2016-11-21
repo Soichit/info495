@@ -70,7 +70,7 @@
 3. Embed client token into braintree form.
 4. Receive payment nounce from Braintree when client submits form (auto)
 5. Send payment nounce to server-side
-6. Reroute client back to homepage
+6. Re-route client back to homepage
 
 ## Server side steps:
 1. Generate client token
@@ -78,7 +78,7 @@
 3. Receive payment nounce from client-side
 4. Create a transaction
 
-## Vocabulary
+## BrainTree vocabulary
 **Client token** =  contains all authorization and configuration information your client needs to initialize the client SDK to communicate with Braintree. 
 <br />
 **Payment nounce** = a one time use value that represents that payment method.
@@ -117,10 +117,10 @@ braintree.setup(clientToken, "dropin", {
 
 
 ### Step 2:  Request client token from server side (XML format)
-We will use jQuery to do an AJAX request to your server-side code (which will be created next)
+We will use jQuery to do an AJAX request to your server-side code (which will be created next).
 <br />
 For now, we will do a request to our localhost:3001 port to test it. When we create our back-end code,
-we need to make sure we host on the same port, localhost:3001 
+we need to make sure we host on the same port, localhost:3001.
 ```
 var clientToken;
 $.ajax({url: "http://localhost:3001/client_token",
@@ -139,8 +139,8 @@ braintree.setup(CLIENT_TOKEN_FROM_SERVER, 'dropin', {
 ```
 
 
-Combining Steps 2 and 3
-You need to build the form within the AJAX request
+### Combining Steps 2 and 3
+You need to build the form within the AJAX request.
 ```
 var clientToken;
 // ajax request to recieve client token
