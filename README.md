@@ -89,8 +89,11 @@
 # Let's get started!
 
 ## Client-side (part 1 / 2)
+Create a `index.html` file for your front-end
 
-`1. Build braintree payment form`
+
+### Step 1: Build braintree payment form
+Copy this code and paste it in. If you want to create a seperate JavaScript file, that's fine.
 
 
 ```
@@ -113,8 +116,46 @@ braintree.setup(clientToken, "dropin", {
 ```
 
 
+### Step 2:  Request client token from server side (XML format)
+We will use jQuery to do an AJAX request to your server-side code (which will be created next)
+<br />
+For now, we will do a request to our localhost:3001 port to test it. When we create our back-end code,
+we need to make sure we host on the same port, localhost:3001 
+```
+var clientToken;
+$.ajax({url: "http://localhost:3001/client_token",
+		success: function(result) {
+        	console.log(result);
+        	clientToken = result;
+        }});
+```
 
 
+### Step 3:  Embed client token into braintree form.
+```
+braintree.setup(CLIENT_TOKEN_FROM_SERVER, 'dropin', {
+  container: 'payment-form'
+});
+```
+
+
+Combining Steps 2 and 3
+You need to build the form within the AJAX request
+```
+var clientToken;
+// ajax request to recieve client token
+$.ajax({url: "http://localhost:3001/client_token",
+		success: function(result) {
+        	console.log(result);
+        	clientToken = result;
+
+        	// embedding the client token into the braintree template
+         	braintree.setup(clientToken, "dropin", {
+			    container: "payment-form"
+		    });
+        }});
+
+```
 
 
 
