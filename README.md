@@ -11,20 +11,24 @@
 <br />
 
 ## Braintree
-Braintree is a full-stack payments platform for web and mobile applications. 
-It can be integrated into your app to process payments for you with added security and an easy UI.
-They provide a lot of the code for you including the UI (shown below) for users to enter their credit card info and an option to pay through paypal as well.
+* a full-stack payments platform for web and mobile applications. 
+* It can be integrated into your app to process payments for you with added security and an easy UI.
+* They provide a lot of the code for you including the UI (shown below) for users to enter their credit card info and an option to pay through paypal as well.
 <img src="imgs/braintree-ui.png" />
 
 <br />
 
 ## Node.js
-Node.js is a ...
+* JavaScript runtime environment.
+* event-driven framework used to develop I/O intensive and scalable server-side web applications.
+* comes with lots of useful modules.
+* comes with NPM (node package manager).
 
+<br />
 
-
-
-
+## Express
+* the most popular web framework for Node.
+* a minimal and flexible Node.js web application framework that provides a robust set of features to develop web and mobile applications.
 
 
 
