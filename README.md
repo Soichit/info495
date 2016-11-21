@@ -1,7 +1,4 @@
 # Module to integrate Braintree payments with your app 
-___
-
-
 <br />
 <br />
 
@@ -12,6 +9,25 @@ ___
 * Express
 
 <br />
+
+## Braintree
+Braintree is a full-stack payments platform for web and mobile applications. 
+It can be integrated into your app to process payments for you with added security and an easy UI.
+They provide a lot of the code for you including the UI (shown below) for users to enter their credit card info and an option to pay through paypal as well.
+<img src="imgs/braintree-ui.png" />
+
+<br />
+
+## Node.js
+Node.js is a ...
+
+
+
+
+
+
+
+
 
 
 ## Setup
@@ -26,10 +42,13 @@ ___
 
 <br />
 
-## What are each of these?
+## Why do I need to install these?
 1. Node.js: back-end for servers built on JavaScript
 2. Braintree: package used to integrate payment application
 3. Express: web framework used alongside Node.js
 4. Body parser: parses incoming request bodies in a middleware before your handlers
 5. Nodemon: detects any files changes and automatically restarts your node application.
 6. Allow-Control-Allow-Origin: allows JavaScript on a web page to make XMLHttpRequests to another domain so you can have the front-end and back-end both running on your local server on different ports.
+
+<br />
+
