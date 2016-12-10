@@ -187,11 +187,13 @@ $.ajax({url: "http://localhost:3001/client_token",
 </script>
 ```
 
+<br />
 
 ## Server-side (part 2 / 2)
-Create a app.js file. It doesn't have to be in the same folder as the index.html, but you will need to run both on different local servers to test your code. Make sure to install the Allow-Control-Allow-Origin for chrome (link provided at the top under Setup)
+Create a `app.js` file. It doesn't have to be in the same folder as the index.html, but you will need to run both on different local servers to test your code. Make sure to install the Allow-Control-Allow-Origin for chrome (link provided at the top under Setup)
 
-### Step 0: We first want to make sure we have all packages and dependencies installed. Go back to Setup to see the commands to npm install braintree and express. 
+### Step 0: Setting up our Node file
+Make sure we have all packages and dependencies installed. Go back to Setup to see the commands to npm install braintree and express. Then copy and paste the code below so our app.js file actually reads in these packages.
 ```
 var braintree = require("braintree");
 var express = require('express');
