@@ -92,9 +92,11 @@ console.log('Server running at http://127.0.0.1:3000/');
 console.log('Server also running at http://localhost:3000/');
 ```
 Now in your command line, run this with `node app.js`. If you have nodemon installed, you can do `nodemon app.js` and it will detect any change you make to the app.js file. On your browser, go to either `http://127.0.0.1:3000/` or `http://localhost:3000/`. This is what you should see:
-<kbd><img src="imgs/img2.png" /> <br /></kbd>
+<kbd><img src="imgs/img2.png" /></kbd>
+<br />
 Here is what your terminal should print out. Do `Ctrl + C` to quit if you're using terminal.
-<img src="imgs/img3.png" /> <br />
+<kbd><img src="imgs/img3.png" /></kbd>
+<br />
 Now it's your turn. Replace the blank ____'s with your information and test it to see that it works.
 
 
@@ -159,7 +161,7 @@ braintree.setup(clientToken, "dropin", {
 </script>
 ```
 Run this code and see if the UI is displayed on the front-end. If the client token isn't valid, it will not show up so make sure your client token value is valid. The UI should like this:
-<img src="imgs/braintree-ui.png" />
+<kbd><img src="imgs/braintree-ui.png" /></kbd>
 
 
 ### Step 2:  Request client token from server side (XML format)
