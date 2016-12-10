@@ -92,9 +92,9 @@ console.log('Server running at http://127.0.0.1:3000/');
 console.log('Server also running at http://localhost:3000/');
 ```
 Now in your command line, run this with `node app.js`. If you have nodemon installed, you can do `nodemon app.js` and it will detect any change you make to the app.js file. On your browser, go to either `http://127.0.0.1:3000/` or `http://localhost:3000/`. This is what you should see:
-<img src="imgs/img2.png" />
+<img src="imgs/img2.png" /> <br />
 Here is what your terminal should print out. Do `Ctrl + C` to quit if you're using terminal.
-<img src="imgs/img3.png" />
+<img src="imgs/img3.png" /> <br />
 Now it's your turn. Replace the blank ____'s with your information and test it to see that it works.
 
 
