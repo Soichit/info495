@@ -59,7 +59,54 @@
 <br />
 <br />
 
-# There are 2 main steps to complete Braintree integration
+## Learning Exercise 1: Learn Node.js
+
+### Step 1: Create an app.js file
+
+### Step 2: Import require module
+Use the require directive to load the http module.
+```
+var http = require("http");
+```
+
+### Step 3: Creating a server
+After the require("http") line, we use that created http instance and call http.createServer().
+This method createes te  server instance which we will bind to port 3000 using the listen method.
+Set whatever you want to return inside response.end(). The console.log() methods are used to show you can print to your command line.
+Copy this code inside your app.js file.
+```
+var http = require("http");
+
+http.createServer(function (request, response) {
+   // Send the HTTP header 
+   response.writeHead(200, {'Content-Type': 'text/plain'});
+   
+   // Send the response body as your name
+   response.end('Hi my name is ______\n');
+}).listen(3000);
+
+// Console will print to the console
+console.log('Console.log works!')
+console.log('My age is ___')
+console.log('Server running at http://127.0.0.1:3000/');
+console.log('Server also running at http://localhost:3000/');
+```
+Now in your command line, run this with `node app.js`. If you have nodemon installed, you can do `nodemon app.js` and it will detect any change you make to the app.js file. On your browser, go to either `http://127.0.0.1:3000/` or `http://localhost:3000/`. This is what you should see:
+<img src="imgs/img2.png" />
+Here is what your terminal should print out. Do `Ctrl + C` to quit if you're using terminal.
+<img src="imgs/img3.png" />
+Now it's your turn. Replace the blank ____'s with your information and test it to see that it works.
+
+
+
+
+
+
+<br />
+<br />
+
+# Braintree integration
+## There are 2 main steps
 1. Client-side (front-end)
 2. Server-side (back-end)
 
@@ -193,7 +240,7 @@ $.ajax({url: "http://localhost:3001/client_token",
 Create a `app.js` file. It doesn't have to be in the same folder as the index.html, but you will need to run both on different local servers to test your code. Make sure to install the Allow-Control-Allow-Origin for chrome (link provided at the top under Setup)
 
 ### Step 0: Setting up our Node file
-Make sure we have all packages and dependencies installed. Go back to Setup to see the commands to npm install braintree and express. Then copy and paste the code below so our app.js file actually reads in these packages.
+Make sure we have all packages and dependencies installed. Go back to Setup to see the commands to npm install braintree and express. Then copy and paste the code below so our app.js file loads these packages.
 ```
 var braintree = require("braintree");
 var express = require('express');
@@ -221,7 +268,7 @@ app.get("/client_token", function (req, res) {
   });
 });
 ```
-If the client tries to do an AJAX request for "http://localhost:3001/client_token", it should recieve the client token. Test this by running app.js under your local port 3001, it doesn't matter what port index.html is running in as long as it's different.
+If the client tries to do an AJAX request for "http://localhost:3001/client_token", it should recieve the client token. Test this by running app.js under your local port 3001, and your index.html on another port. It doesn't matter what port index.html is running in as long as it's different.
 
 ### Step 3 & 4: Receive payment nounce from client-side and create a transaction with it
 Paste this code under the one generating the client token.
