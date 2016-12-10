@@ -67,9 +67,7 @@
 1. Build braintree payment form
 2. Request client token from server side (XML format)
 3. Embed client token into braintree form.
-4. Receive payment nounce from Braintree when client submits form (auto)
-5. Send payment nounce to server-side
-6. Re-route client back to homepage
+4. Send payment nounce to server-side
 
 ## Server side steps:
 1. Generate client token
@@ -80,7 +78,7 @@
 ## BrainTree vocabulary
 **Client token** =  contains all authorization and configuration information your client needs to initialize the client SDK to communicate with Braintree. 
 <br />
-**Payment nounce** = a one time use value that represents that payment method.
+**Payment nounce** = a one time use value that represents that payment method. On your server, the payment method nonce is used with a Braintree server SDK to charge a card or update a customer's payment methods.
 
 <br />
 <br />
@@ -113,7 +111,7 @@ braintree.setup(clientToken, "dropin", {
 });
 </script>
 ```
-Run this code and see if the UI is displaying in the front-end. If the client token isn't valid, it will not show up so make sure your client token value is valid. The UI should like this:
+Run this code and see if the UI is displayed on the front-end. If the client token isn't valid, it will not show up so make sure your client token value is valid. The UI should like this:
 <img src="imgs/braintree-ui.png" />
 
 
@@ -132,7 +130,7 @@ $.ajax({url: "http://localhost:3001/client_token",
 ```
 
 
-### Step 3:  Embed client token into braintree form.
+### Step 3:  Embed client token into braintree form
 ```
 braintree.setup(CLIENT_TOKEN_FROM_SERVER, 'dropin', {
   container: 'payment-form'
@@ -159,15 +157,140 @@ $.ajax({url: "http://localhost:3001/client_token",
 ```
 
 
+### Step 4:  Send payment nounce to server-side
+The payment nounce is automatically recieved when the client submits the form and it is automatically sent to the server side. In the server side, the payment nounce will be used to create a transaction. We will not be needing any more code written in the client side.
+
+### Client side complete code
+```
+<form id="checkout" method="post" action="/checkout">
+  <div id="payment-form"></div>
+  <input type="submit" value="Pay $10">
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
+
+<script>
+
+// AJAX call to retrieve client token from server
+var clientToken;
+$.ajax({url: "http://localhost:3001/client_token",
+    success: function(result) {
+          console.log(result);
+          clientToken = result;
+
+          // embedding the client token into the braintree template
+          braintree.setup(clientToken, "dropin", {
+        container: "payment-form"
+      });
+        }});
+</script>
+```
 
 
+## Server-side (part 2 / 2)
+Create a app.js file. It doesn't have to be in the same folder as the index.html, but you will need to run both on different local servers to test your code. Make sure to install the Allow-Control-Allow-Origin for chrome (link provided at the top under Setup)
+
+### Step 0: We first want to make sure we have all packages and dependencies installed. Go back to Setup to see the commands to npm install braintree and express. 
+```
+var braintree = require("braintree");
+var express = require('express');
+var app = express();
+
+```
+And go make a free Sandbox account on braintreepayments.com to get your API credentials. Once you sign up, go to Account tab > My User > under API Keys, Tokenization Keys, Encryption Keys, click View Authorizations. Once you get your API key for node.js, just copy and paste that in your server-side code. It should look something like this:
+```
+// configure API credentials
+var gateway = braintree.connect({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "d7b6q5dgx6hdjhhw",
+  publicKey: "mmjpwtk9k5mmvswv",
+  privateKey: "dc0774e8ea6663588750b7993e4cf1c0"
+});
+```
+
+### Step 1 & 2: Generate client token and send it to client side
+Include this code after your API credentials in app.js
+
+```
+app.get("/client_token", function (req, res) {
+  gateway.clientToken.generate({}, function (err, response) {
+    res.send(response.clientToken);
+  });
+});
+```
+If the client tries to do an AJAX request for "http://localhost:3001/client_token", it should recieve the client token. Test this by running app.js under your local port 3001, it doesn't matter what port index.html is running in as long as it's different.
+
+### Step 3 & 4: Receive payment nounce from client-side and create a transaction with it
+Paste this code under the one generating the client token.
+```
+app.post("/checkout", function (req, res) { 
+  // recieve payment method nounce from client
+  var nonceFromTheClient = req.body.payment_method_nonce;
+  console.log(nonceFromTheClient);
+
+   //creating a transaction
+  gateway.transaction.sale({
+    amount: "10.00",
+    paymentMethodNonce: nonceFromTheClient,
+    options: {
+      submitForSettlement: true
+    }
+  }, function (err, result) {
+    console.log("Success!");
+  });
+});
+```
+Here your server recieves the payment nounce from the client, then sends that to Braintree's servers to complete the transaction. The amount created here was $10 but you may use the bodyparser to change it. For any of this to work, you will need to do app.listen. Add this code to the end:
+```
+app.listen(3001, function () {
+  console.log('listening on port 3001!')
+})
+```
+### Server side complete code
+```
+var braintree = require("braintree");
+var express = require('express');
+var app = express();
+
+// configure API credentials
+var gateway = braintree.connect({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "d7b6q5dgx6hdjhhw",
+  publicKey: "mmjpwtk9k5mmvswv",
+  privateKey: "dc0774e8ea6663588750b7993e4cf1c0"
+});
+
+// generate a client token
+// include customerId for returning customers
+app.get("/client_token", function (req, res) {
+  gateway.clientToken.generate({}, function (err, response) {
+    res.send(response.clientToken);
+  });
+});
+
+// recieve payment method nounce from client
+app.post("/checkout", function (req, res) { 
+  var nonceFromTheClient = req.body.payment_method_nonce;
+  console.log(nonceFromTheClient);
+
+   //creating a transaction
+  gateway.transaction.sale({
+    amount: "10.00",
+    paymentMethodNonce: nonceFromTheClient,
+    options: {
+      submitForSettlement: true
+    }
+  }, function (err, result) {
+    console.log("Success!");
+  });
+});
 
 
-
-
-
-
-
+app.listen(3001, function () {
+  console.log('listening on port 3001!')
+})
+```
 
 
 
