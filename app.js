@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 
-app.get('/', function (req, res) {
+app.get('/name', function (req, res) {
     res.send('Hi my name is ______\n');
+})
+
+app.get('/age', function (req, res) {
+    res.send('Hi my age is ______\n');
 })
 
 var server = app.listen(3000, function () {

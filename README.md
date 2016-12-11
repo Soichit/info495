@@ -54,7 +54,7 @@
 3. Express: web framework used alongside Node.js
 4. Body parser: parses incoming request bodies in a middleware before your handlers
 5. Nodemon: detects any files changes and automatically restarts your node application.
-6. Allow-Control-Allow-Origin: allows JavaScript on a web page to make XMLHttpRequests to another domain so you can have the front-end and back-end both running on your local server on different ports.
+6. Allow-Control-Allow-Origin: Chrome browser extension allows JavaScript on a web page to make XMLHttpRequests to another domain so you can have the front-end and back-end both running on your local server on different ports.
 
 <br />
 <br />
@@ -136,7 +136,114 @@ var server = app.listen(3000, function () {
 ```
 On your server, run node app2.js to run this file and go to your localhost on your browser again. Customize the name and age to yours to complete this exercise.
 
+<br />
 
+## Learning Exercise 3: Connecting Express app with front-end
+We will now make a client side file to interact with the Express app we just made in exercise 2. Our front end code will do an AJAX call after the user clicks the button to retrieve data.
+
+### Step 1: Create an index.html file
+It doesn't matter where this file is located. It doesn't have to be in the same file as the app2.js because our front-end code will call localhost:3000 to retrive data from app2.js
+
+### Step 2: Create front end with jQuery
+The script file could be seperated but we have the html and the JavaScript in the same file for simplicity. Any time the button is clicked, our jQuery does an AJAX call to http://localhost:3000/ to retrieve the data.
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+    <title>title</title>
+  </head>
+  <body>
+    <h1>Introduction</h1>
+    <h2></h2>
+    <h3></h3>
+    <br />
+    <button>Get server data</button>
+
+    <script>
+      $(document).ready(function(){
+        $("button").click(function(){
+            $.get( "http://localhost:3000/", function( data ) {
+            $( "h2" ).html( data );
+            console.log( "Data retrieved from server" );
+          });
+        });
+    });     
+    </script>
+  </body>
+</html>
+```
+### Step 3: Testing
+Make sure you have the cross-browser Allow-Control-Allow-Origin extension added for chrome. Go up to the Setup section for the link. Now you need two command lines to run app2.js on http://localhost:3000/ and another one to run index.html on another port. The port for index.html does not matter. Let's do `python -m SimpleHTTPServer 8080
+` in the folder index.html is located. Before you do that, run `node app2.js` from another command line and it will automatically host it on localhost:3000. If you are on a Mac, do `cmd + t` to open up a new tab on terminal. If you are on Windows, you can try running one on cmd and the other on GitBash or any other CLI you can install.
+GO to localhost:8080 on your browser.
+
+
+### Step 4: Another GET statement
+Let's change up app.js and index.html to display your age as well.
+Copy this code for app.js. Notice we changed `app.get('/', function (req, res) {` to `app.get('/name', function (req, res) {`
+```
+var express = require('express');
+var app = express();
+
+app.get('/name', function (req, res) {
+    res.send('Hi my name is ______\n');
+})
+
+app.get('/age', function (req, res) {
+    res.send('Hi my age is ______\n');
+})
+
+var server = app.listen(3000, function () {
+    var host = server.address().address
+    var port = server.address().port
+   
+    // Console will print to the console
+  console.log('Console.log works!')
+  console.log('My age is ___')
+  console.log('Server running at http://127.0.0.1:3000/');
+  console.log('Server also running at http://localhost:3000/');
+})
+```
+Now for the index.html, we added another AJAX call.
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+    <title>title</title>
+  </head>
+  <body>
+    <h1>Introduction</h1>
+    <h2></h2>
+    <h3></h3>
+    <br />
+    <button>Get server data</button>
+
+    <script>
+      $(document).ready(function(){
+        $("button").click(function(){
+            $.get( "http://localhost:3000/name", function( data ) {
+          $( "h2" ).html( data );
+          console.log( "Data retrieved from server" );
+        });
+        $.get( "http://localhost:3000/age", function( data ) {
+          $( "h3" ).html( data );
+          console.log( "Data retrieved from server" );
+        });
+        });
+    });     
+    </script>
+  </body>
+</html>
+```
+This is what you should have:
+<kbd><img src="imgs/img4.png" /></kbd>
+
+<br />
+<br />
 <br />
 <br />
 

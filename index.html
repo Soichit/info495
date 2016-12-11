@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+    <title>title</title>
+  </head>
+  <body>
+  	<h1>Introduction</h1>
+  	<h2></h2>
+  	<h3></h3>
+  	<br />
+  	<button>Get server data</button>
+
+  	<script>
+  		$(document).ready(function(){
+		    $("button").click(function(){
+		        $.get( "http://localhost:3000/name", function( data ) {
+				  $( "h2" ).html( data );
+				  console.log( "Data retrieved from server" );
+				});
+				$.get( "http://localhost:3000/age", function( data ) {
+				  $( "h3" ).html( data );
+				  console.log( "Data retrieved from server" );
+				});
+		    });
+		}); 		
+    </script>
+  </body>
+</html>
