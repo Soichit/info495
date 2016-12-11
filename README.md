@@ -71,7 +71,7 @@ var http = require("http");
 
 ### Step 3: Creating a server
 After the require("http") line, we use that created http instance and call http.createServer().
-This method createes te  server instance which we will bind to port 3000 using the listen method.
+This method creates the  server instance which we will bind to port 3000 using the listen method.
 Set whatever you want to return inside response.end(). The console.log() methods are used to show you can print to your command line.
 Copy this code inside your app.js file.
 ```
@@ -99,9 +99,42 @@ Here is what your terminal should print out. Do `Ctrl + C` to quit if you're usi
 <br />
 Now it's your turn. Replace the blank ____'s with your information and test it to see that it works.
 
+<br />
 
+## Learning Exercise 2: Learn Express.js
+We will now do the same thing we did for exercise 1 but utilizing Express.js with node.js.
 
+### Step 1: Create an app2.js file
 
+### Step 2: Import require module
+Similar to the step 2 in exercise 1, we want to read in express. Make sure you have Express.js installed by doing the npm command listed above in the Setup section.
+```
+var express = require('express');
+```
+
+### Step 3: Creating a server
+After the require('express') line, we are setting app = express(), making app an instance of express. This is the standard convention for express apps. Notice the app.get method responds with a GET request with your name.
+
+```
+var express = require('express');
+var app = express();
+
+app.get('/', function (req, res) {
+    res.send('Hi my name is ______\n');
+})
+
+var server = app.listen(3000, function () {
+    var host = server.address().address
+    var port = server.address().port
+   
+    // Console will print to the console
+  console.log('Console.log works!')
+  console.log('My age is ___')
+  console.log('Server running at http://127.0.0.1:3000/');
+  console.log('Server also running at http://localhost:3000/');
+})
+```
+On your server, run node app2.js to run this file and go to your localhost on your browser again. Customize the name and age to yours to complete this exercise.
 
 
 <br />
