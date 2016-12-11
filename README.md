@@ -142,7 +142,7 @@ On your server, run node app2.js to run this file and go to your localhost on yo
 We will now make a client side file to interact with the Express app we just made in exercise 2. Our front end code will do an AJAX call after the user clicks the button to retrieve data.
 
 ### Step 1: Create an index.html file
-It doesn't matter where this file is located. It doesn't have to be in the same file as the app2.js because our front-end code will call localhost:3000 to retrive data from app2.js
+It doesn't matter where this file is located. It doesn't have to be in the same file as the app2.js because our front-end code will call localhost:3000 to retrive data from app2.js.
 
 ### Step 2: Create front end with jQuery
 The script file could be seperated but we have the html and the JavaScript in the same file for simplicity. Any time the button is clicked, our jQuery does an AJAX call to http://localhost:3000/ to retrieve the data.
@@ -240,6 +240,7 @@ Now for the index.html, we added another AJAX call.
 </html>
 ```
 This is what you should have:
+<br />
 <kbd><img src="imgs/img4.png" /></kbd>
 
 <br />
